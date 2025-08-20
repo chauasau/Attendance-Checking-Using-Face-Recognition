@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Điểm danh Face Recognition</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #video-container { text-align: center; margin-bottom: 20px; }
+        #attendance-table { border-collapse: collapse; width: 100%; max-width: 600px; margin: 0 auto; }
+        #attendance-table th, #attendance-table td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        #attendance-table th { background-color: #4CAF50; color: white; }
+        button { padding: 10px 20px; margin: 10px; font-size: 16px; cursor: pointer; }
+
+        /* Thêm phần navigation cơ bản */
+        #navbar {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #navbar a {
+            text-decoration: none;
+            margin: 0 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Điểm danh khuôn mặt</h1>
+
+    <div id="navbar">
+        <a href="{{ url_for('index') }}"><button>Trang chủ</button></a>
+        <a href="{{ url_for('history') }}"><button>Lịch sử điểm danh</button></a>
+    </div>
+
+    <div id="video-container">
+        <img src="{{ url_for('video_feed') }}" width="640" height="480" alt="Video stream">
+    </div>
+
+    <div style="text-align: center;">
+        <a href="{{ url_for('start_camera') }}"><button>Mở Camera</button></a>
+        <a href="{{ url_for('stop_camera') }}"><button>Dừng Camera</button></a>
+    </div>
+
+    <h2 style="text-align: center;">Danh sách điểm danh hôm nay ({{ records|length }})</h2>
+    <table id="attendance-table">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Ngày</th>
+                <th>Giờ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in records %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">Chưa có dữ liệu điểm danh hôm nay</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

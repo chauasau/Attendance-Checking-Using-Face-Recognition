@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lịch sử điểm danh</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: auto;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #eee;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .search-box {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-box input[type="text"] {
+            padding: 8px;
+            width: 250px;
+        }
+        .search-box button {
+            padding: 8px 12px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Lịch sử điểm danh</h2>
+
+    <div class="search-box">
+        <form method="get" action="{{ url_for('history') }}">
+            <input type="text" name="q" placeholder="Tìm theo tên..." value="{{ search_query }}">
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+
+    <table>
+        <tr>
+            <th>Tên</th>
+            <th>Ngày</th>
+            <th>Giờ</th>
+        </tr>
+        {% for row in records %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+        </tr>
+        {% endfor %}
+        {% if not records %}
+        <tr><td colspan="3">Không tìm thấy dữ liệu.</td></tr>
+        {% endif %}
+    </table>
+</body>
+</html>
